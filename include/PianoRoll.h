@@ -42,6 +42,8 @@
 #include "StepRecorderWidget.h"
 #include "PositionLine.h"
 
+#include "MidiWinMM.h"
+
 class QPainter;
 class QPixmap;
 class QScrollBar;

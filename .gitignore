@@ -1,4 +1,4 @@
-/build
+/build*
 /target
 .*.sw?
 .DS_Store
@@ -9,3 +9,8 @@
 /plugins/zynaddsubfx/zynaddsubfx/doc/Makefile
 /plugins/zynaddsubfx/zynaddsubfx/doc/gen/Makefile
 /data/locale/*.qm
+buildr*
+GPATH
+GRTAGS
+GTAGS
+/data/stk

@@ -34,6 +34,8 @@
 #include "lmms_export.h"
 #include "lmms_basics.h"
 
+#include "MidiWinMM.h"
+
 class BBTrackContainer;
 class FxMixer;
 class ProjectJournal;
