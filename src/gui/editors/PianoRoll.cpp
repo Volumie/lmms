@@ -1286,7 +1286,15 @@ void PianoRoll::keyPressEvent(QKeyEvent* ke)
 			{
 				if((ke->modifiers() & Qt::ControlModifier))
 				{
-					record();
+					ke->accept();
+					if(( ke->modifiers() & Qt::ShiftModifier ))
+					{
+						recordAccompany();
+					}
+					else
+					{
+						record();
+					}
 				}
 			}
 		break;
