@@ -60,7 +60,7 @@ class LMMS_EXPORT LmmsCore : public QObject
 {
 	Q_OBJECT
 public:
-	static void init( bool renderOnly );
+	static void init( bool renderOnly, MidiWinMM** midiEvent );
 	static void destroy();
 
 	// core

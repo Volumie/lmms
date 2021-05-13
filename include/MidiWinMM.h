@@ -34,9 +34,10 @@
 #include "MidiClient.h"
 #include "MidiPort.h"
 
+//#include "PianoRoll.h"
 
 class QLineEdit;
-
+class PianoRollWindow;
 
 class MidiWinMM : public QObject, public MidiClient
 {
@@ -61,7 +62,9 @@ public:
 		return QString(); // no configuration settings
 	}
 
-
+	//Volumie
+	PianoRollWindow* pianoRollWindowV;
+	void setPianoRollWindow(PianoRollWindow* prwv);
 
 	virtual void processOutEvent( const MidiEvent & _me,
 						const TimePos & _time,

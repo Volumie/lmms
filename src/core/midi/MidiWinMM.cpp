@@ -25,6 +25,8 @@
 #include "MidiWinMM.h"
 #include "Note.h"
 
+#include "PianoRoll.h"
+
 #ifdef LMMS_BUILD_WIN32
 
 
@@ -38,7 +40,14 @@ MidiWinMM::MidiWinMM() :
 	openDevices();
 }
 
+//volumie
+void MidiWinMM::setPianoRollWindow(PianoRollWindow* prwv){
+	if(prwv != nullptr)
+	{
+		pianoRollWindowV = prwv;
+	}
 
+}
 
 
 MidiWinMM::~MidiWinMM()
@@ -193,7 +202,57 @@ void MidiWinMM::handleInputEvent( HMIDIIN hm, DWORD ev )
 	const int par2 = ev >> 16;
 	const MidiEventTypes cmdtype = static_cast<MidiEventTypes>( cmd & 0xf0 );
 	const int chan = cmd & 0x0f;
+	/*
+	//volumie
+	if( par1 == 114
+		&& pianoRollWindowV != nullptr )
+	{
+		pianoRollWindowV->record();
+		return;
+	}
+	*/
+	if(cmdtype == MidiControlChange )
+	{
+		switch(par1)
+		{
+			//record
+			case 114:
+				{
+					pianoRollWindowV->record();
+					return;
+				}
+			//play
+			case 119:
+				{
+					pianoRollWindowV->play();
+					return;
+				}
+			//stop
+			case 118:
+				{
+					pianoRollWindowV->stop();
+					return;
+				}
+			//accompanyRecord
+			case 117:
+				{
+					pianoRollWindowV->recordAccompany();
+					return;
+				}
+			//DeleteEverything
+			case 116:
+				{
+					pianoRollWindowV->m_editor->selectAll();
+					pianoRollWindowV->m_editor->computeSelectedNotes(false);
+					pianoRollWindowV->update();
+					pianoRollWindowV->m_editor->deleteSelectedNotes();
+					pianoRollWindowV->update();
+				}
+			default:
+				break;
 
+	}
+	}
 	const QString d = m_inputDevices.value( hm );
 	if( d.isEmpty() || !m_inputSubs.contains( d ) )
 	{

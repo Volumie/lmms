@@ -29,7 +29,7 @@
 
 #include "lmms_export.h"
 #include "lmmsconfig.h"
-
+#include "MidiWinMM.h"
 class QLabel;
 
 class AutomationEditorWindow;

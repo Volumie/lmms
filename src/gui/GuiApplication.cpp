@@ -116,8 +116,10 @@ GuiApplication::GuiApplication()
 	connect(Engine::inst(), SIGNAL(initProgress(const QString&)), 
 		this, SLOT(displayInitProgress(const QString&)));
 
+	//Volumie
+	MidiWinMM* midiEvent = nullptr;
 	// Init central engine which handles all components of LMMS
-	Engine::init(false);
+	Engine::init(false, &midiEvent);
 
 	s_instance = this;
 
@@ -150,6 +152,10 @@ GuiApplication::GuiApplication()
 
 	displayInitProgress(tr("Preparing piano roll"));
 	m_pianoRoll = new PianoRollWindow();
+	if( midiEvent != nullptr )
+	{
+		midiEvent->setPianoRollWindow(m_pianoRoll);
+	}
 	connect(m_pianoRoll, SIGNAL(destroyed(QObject*)), this, SLOT(childDestroyed(QObject*)));
 
 	displayInitProgress(tr("Preparing automation editor"));
@@ -171,7 +177,7 @@ GuiApplication::~GuiApplication()
 void GuiApplication::displayInitProgress(const QString &msg)
 {
 	Q_ASSERT(m_loadingProgressLabel != nullptr);
-	
+
 	m_loadingProgressLabel->setText(msg);
 	// must force a UI update and process events, as there may be long gaps between processEvents() calls during init
 	m_loadingProgressLabel->repaint();

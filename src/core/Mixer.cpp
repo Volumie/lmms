@@ -194,7 +194,7 @@ Mixer::~Mixer()
 
 
 
-void Mixer::initDevices()
+void Mixer::initDevices(void** midiEvent)
 {
 	bool success_ful = false;
 	if( m_renderOnly ) {
@@ -204,7 +204,7 @@ void Mixer::initDevices()
 		m_midiClientName = MidiDummy::name();
 	} else {
 		m_audioDev = tryAudioDevices();
-		m_midiClient = tryMidiClients();
+		m_midiClient = tryMidiClients(midiEvent);
 	}
 }
 
@@ -1099,7 +1099,7 @@ AudioDevice * Mixer::tryAudioDevices()
 
 
 
-MidiClient * Mixer::tryMidiClients()
+MidiClient * Mixer::tryMidiClients(void** midiEvent)
 {
 	QString client_name = ConfigManager::inst()->value( "mixer",
 								"mididev" );
@@ -1175,6 +1175,7 @@ MidiClient * Mixer::tryMidiClients()
 	if( client_name == MidiWinMM::name() || client_name == "" )
 	{
 		MidiWinMM * mwmm = new MidiWinMM;
+		*midiEvent = mwmm;
 //		if( moss->isRunning() )
 		{
 			m_midiClientName = MidiWinMM::name();

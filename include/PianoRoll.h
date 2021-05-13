@@ -42,7 +42,7 @@
 #include "StepRecorderWidget.h"
 #include "PositionLine.h"
 
-#include "MidiWinMM.h"
+//#include "MidiWinMM.h"
 
 class QPainter;
 class QPixmap;
@@ -146,6 +146,8 @@ public:
 
 	int quantization() const;
 
+	//volumie
+	void selectAll();
 protected:
 	enum QuantizeActions
 	{
@@ -172,7 +174,7 @@ protected:
 					int  width, const Note * n, const QColor & noteCol, const QColor & noteTextColor,
 					const QColor & selCol, const int noteOpc, const bool borderless, bool drawNoteName );
 	void removeSelection();
-	void selectAll();
+
 	NoteVector getSelectedNotes() const;
 	void selectNotesOnKey();
 
@@ -180,6 +182,9 @@ protected:
 	void enterValue( NoteVector* nv );
 
 	void updateYScroll();
+
+public slots:
+	bool deleteSelectedNotes();
 
 protected slots:
 	void play();
@@ -199,7 +204,6 @@ protected slots:
 	void copySelectedNotes();
 	void cutSelectedNotes();
 	void pasteNotes();
-	bool deleteSelectedNotes();
 
 	void updatePosition(const TimePos & t );
 	void updatePositionAccompany(const TimePos & t );
@@ -234,7 +238,9 @@ signals:
 	void ghostPatternSet(bool);
 	void semiToneMarkerMenuScaleSetEnabled(bool);
 	void semiToneMarkerMenuChordSetEnabled(bool);
-
+	
+public:
+	void computeSelectedNotes( bool shift );
 
 private:
 	enum Actions
@@ -434,7 +440,7 @@ private:
 	Note * noteUnderMouse();
 
 	// turn a selection rectangle into selected notes
-	void computeSelectedNotes( bool shift );
+	
 	void clearSelectedNotes();
 
 	// did we start a mouseclick with shift pressed
@@ -539,13 +545,15 @@ private slots:
 	void exportPattern();
 	void importPattern();
 
+public:
+	PianoRoll* m_editor;
 private:
 	void patternRenamed();
 	void focusInEvent(QFocusEvent * event) override;
 	void stopStepRecording();
 	void updateStepRecordingIcon();
 
-	PianoRoll* m_editor;
+
 
 	QToolButton* m_fileToolsButton;
 	ComboBox * m_zoomingComboBox;

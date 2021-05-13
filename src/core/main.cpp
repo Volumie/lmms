@@ -805,7 +805,7 @@ int main( int argc, char * * argv )
 	// without starting the GUI
 	if( !renderOut.isEmpty() )
 	{
-		Engine::init( true );
+		Engine::init( true , nullptr);
 		destroyEngine = true;
 
 		printf( "Loading project...\n" );

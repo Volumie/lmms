@@ -51,7 +51,7 @@ void* LmmsCore::s_dndPluginKey = nullptr;
 
 
 
-void LmmsCore::init( bool renderOnly )
+void LmmsCore::init( bool renderOnly ,MidiWinMM** midiEvent)
 {
 	LmmsCore *engine = inst();
 
@@ -75,7 +75,7 @@ void LmmsCore::init( bool renderOnly )
 	s_projectJournal->setJournalling( true );
 
 	emit engine->initProgress(tr("Opening audio and midi devices"));
-	s_mixer->initDevices();
+	s_mixer->initDevices(midiEvent);
 
 	PresetPreviewPlayHandle::init();
 

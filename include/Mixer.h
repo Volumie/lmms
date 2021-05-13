@@ -153,7 +153,7 @@ public:
 		}
 	} ;
 
-	void initDevices();
+	void initDevices(void** midiEvent);
 	void clear();
 	void clearNewPlayHandles();
 
@@ -358,7 +358,7 @@ private:
 
 
 	AudioDevice * tryAudioDevices();
-	MidiClient * tryMidiClients();
+	MidiClient * tryMidiClients(void** midiEvent);
 
 
 	const surroundSampleFrame * renderNextBuffer();
