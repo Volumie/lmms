@@ -1281,6 +1281,15 @@ void PianoRoll::keyPressEvent(QKeyEvent* ke)
 
 	switch( ke->key() )
 	{
+
+		case Qt::Key_Space:
+			{
+				if((ke->modifiers() & Qt::ControlModifier))
+				{
+					record();
+				}
+			}
+		break;
 		case Qt::Key_Up:
 		case Qt::Key_Down:
 			{
